@@ -9,7 +9,7 @@
 	</select>
 	
 <select id="user_list" resultType="map" parameterType="map">
-	select * from Crm_user where user_id like '%${check}%' or 
+	select * from crm_user where user_id like '%${check}%' or 
 	user_loginname like '%${check}%' or 
 	user_loginpass like '%${check}%' or 
 	user_realname like '%${check}%'
@@ -17,7 +17,7 @@
 </select>
 	
 	<select id="getCount" resultType="int" parameterType="map">
-	select count(user_id) from Crm_user where user_id like '%${check}%' or 
+	select count(user_id) from crm_user where user_id like '%${check}%' or 
 	user_loginname like '%${check}%' or 
 	user_realname like '%${check}%'
 </select>
@@ -27,8 +27,8 @@
 </delete>
 
 <insert id="user_save" parameterType="map">
-    insert into crm_user(user_id, user_loginname, user_loginpass, user_realname)
-    values (#{uuid}, #{user_loginname},#{user_loginpass}, #{user_realname})
+    insert into crm_user(user_id, user_loginname, user_loginpass, user_realname, user_addr, user_tel, user_sex)
+    values (#{uuid}, #{user_loginname},#{user_loginpass}, #{user_realname},#{user_addr},#{user_tel},#{user_sex})
 </insert>
 <update id="user_update" parameterType="map">
    update crm_user set User_realname=#{user_realname},

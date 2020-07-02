@@ -3,34 +3,43 @@
 <!-- 命名空间应该是对应接口的包名+接口名 -->
 <mapper namespace="com.st.dao.CustomerDao">
    <sql id="customer_select_where">
-           customer_id like '%${check}%' or
-           customer_name like '%${check}%' or
-           customer_tel like '%${check}%' or
-           customer_addr like '%${check}%' or
-           customer_liaison like '%${check}%' 
+           Customer_id like '%${check}%' or
+           Customer_name like '%${check}%' or
+           Customer_tel like '%${check}%' or
+           Customer_addr like '%${check}%' or
+           Customer_liaison like '%${check}%' 
    </sql>
 	
 <select id="customer_list" resultType="map" parameterType="map">
 	select * 
-	from Crm_customer where customer_id like '%${check}%' or
-    customer_name like '%${check}%' or
-    customer_tel like '%${check}%' or
-    customer_addr like '%${check}%' or
-    customer_liaison like '%${check}%' 
+	from crm_customer where 
+	Customer_id like '%${check}%' or
+    Customer_name like '%${check}%' or
+    Customer_tel like '%${check}%' or
+    Customer_addr like '%${check}%' or
+    Customer_liaison like '%${check}%' 
 	limit ${start},${limit}
 </select>
 	
 <select id="getCount" resultType="int" parameterType="map">
-	select count(customer_id) from Crm_customer where
-	customer_id like '%${check}%' or
-    customer_name like '%${check}%' or
-    customer_tel like '%${check}%' or
-    customer_addr like '%${check}%' or
-    customer_liaison like '%${check}%' 
+	select count(customer_id) from crm_customer where
+	Customer_id like '%${check}%' or
+    Customer_name like '%${check}%' or
+    Customer_tel like '%${check}%' or
+    Customer_addr like '%${check}%' or
+    Customer_liaison like '%${check}%' 
 </select>
 
+<!-- 第一层与数据库有关 -->
+<insert id="customer_save" parameterType="map">
+    insert into crm_customer (Customer_id,Customer_name,Customer_tel,Customer_addr,Customer_state,Customer_user_id,Customer_liaison)
+    values(#{uuid},#{customer_name},#{customer_tel},#{customer_addr},#{customer_state},#{customer_user_id},#{customer_liasion})
+</insert>
+<delete id="customer_del_more" parameterType="map">
+     delete from crm_customer where Customer_id in (${customerids})
+</delete>
 <select id="getPublicCount" parameterType="map" resultType="int">
-    select count(*) from Crm_customer 
+    select count(*) from crm_customer 
     <where>
     (
     <include refid="customer_select_where"></include>
@@ -39,7 +48,7 @@
     </where>
 </select>
 <select id="customer_public_list" parameterType="map" resultType="map">
-    select * from Crm_customer
+    select * from crm_customer
     <where>
     (
     <include refid="customer_select_where"></include>
@@ -49,13 +58,13 @@
     limit ${start},${limit}
 </select>
 <update id="customer_private" parameterType="map" >
-    update Crm_customer set customer_state={#state},
+    update crm_customer set customer_state={#state},
     customer_user_id={loginUserID}
     where customer_id = {#customer_id}
 </update>
 
 <select id="getPrivateCount" parameterType="map" resultType="int">
-    select count(*) from Crm_customer 
+    select count(*) from crm_customer 
     <where>
     (
     <include refid="customer_select_where"></include>

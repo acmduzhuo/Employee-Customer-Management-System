@@ -51,7 +51,7 @@ public class CustomerAction {
 	@RequestMapping("customer_del_more")
 	@ResponseBody
 	public void customer_del_more(@RequestParam Map params) {
-		System.out.println(params);
+		//System.out.println(params);
 		ParamsUtil.arr_str(params, "customerids");
 		cusSer.customer_del_more(params);
 	}

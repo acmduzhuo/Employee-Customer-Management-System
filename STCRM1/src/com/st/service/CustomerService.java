@@ -13,59 +13,56 @@ import util.ParamsUtil;
 @Service
 public class CustomerService {
 	@Autowired
-	CustomerDao customer_dao;
-	
-	public void test() {
-		List list=customer_dao.test();
-		for(Object obj:list) {
-			System.out.println(obj);
-		}
+	CustomerDao cusDao;
+	public int getCount(Map params) {
+		return cusDao.getCount(params);
 	}
 	public List customer_list(Map params) {
 		ParamsUtil.page(params);
-		return customer_dao.customer_list(params);
-	}
-	public int getCount(Map params) {
-		return customer_dao.getCount(params);
+		return cusDao.customer_list(params);
 	}
 	public void customer_save(Map params) {
 		ParamsUtil.uuid(params);
-		String str=params.get("private")+"";
-		if("null".equals(str)) {
-			params.put("loginUserID", "");
-			params.put("customer_state", "0");
-		}else {
-			ParamsUtil.LoginUserID(params,null);
-			params.put(params, 1);
-		}
-		customer_dao.customer_save(params);
-	}
-	public void customer_del(Map params) {
-		customer_dao.customer_del(params);
+//		String str=params.get("private")+"";
+//		if("null".equals(str)) {
+//			params.put("loginUserID", "");
+//			params.put("customer_state", "0");
+//		}else {
+//			ParamsUtil.LoginUserID(params,null);
+//			params.put(params, 1);
+//		}
+		params.put("customer_user_id", "");
+		params.put("customer_state", "0");
+		cusDao.customer_save(params);
 	}
 	public void customer_del_more(Map params) {
-		customer_dao.customer_del_more(params);
+		//ParamsUtil.arr_str(params, "customerids");
+		//System.out.println("customerids");
+		cusDao.customer_del_more(params);
+	}
+	public void customer_del(Map params) {
+		cusDao.customer_del(params);
 	}
 	public void customer_update(Map params) {
-		customer_dao.customer_update(params);
+		cusDao.customer_update(params);
 	}
 	public int getPublicCount(Map params) {
-		return customer_dao.getPublicCount(params);
+		return cusDao.getPublicCount(params);
 	}
 	public List customer_public_list(Map params) {
 		ParamsUtil.page(params);
-		return customer_dao.customer_public_list(params);
+		return cusDao.customer_public_list(params);
 	}
 	public void customer_private(Map params) {
 		ParamsUtil.state(params, 1);
 		ParamsUtil.loginUserId(params, null);
-		customer_dao.customer_private(params);
+		cusDao.customer_private(params);
 	}
 	public int getPrivateCount(Map params) {
-		return customer_dao.getPrivateCount(params);
+		return cusDao.getPrivateCount(params);
 	}
 	public List customer_private_list(Map params) {
 		ParamsUtil.page(params);
-		return customer_dao.customer_private_list(params);
+		return cusDao.customer_private_list(params);
 	}
 }

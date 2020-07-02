@@ -21,7 +21,7 @@ public class ParamsUtil {
 	 */
 	public static String initpass(Map params) {
 		String pass="123456";
-		params.put("User_loginpass",pass);
+		params.put("user_loginpass",pass);
 		return pass;
 	}
 	/*

@@ -8,13 +8,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<base href="<%=basePath%>"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <link rel="stylesheet" href="static/layui/css/layui.css">
 <body>
-
-<!-- 天骄表头工具 -->
 <script type="text/html" id="toolbar">
 	<input type="text" style="height:38px;" id="check"/>
 	<button class="layui-btn layui-icon layui-icon-search " lay-event="select">查询</button>
@@ -34,7 +33,7 @@
       <th lay-data="{field:'Customer_id', sort: true}">ID</th>
       <th lay-data="{field:'Customer_name',sort: true }">客户名</th>
       <th lay-data="{field:'Customer_liaison',sort: true}">联系人</th>
-      <th lay-data="{field:'Customer_tel',sort: true }">手机号码</th>
+      <th lay-data="{field:'Customer_tel',sort: true}">手机号码</th>
       <th lay-data="{field:'Customer_state', sort: true}">状态</th>
       <!-- , templet:function(data){
       if(data.Customer_state==0){
@@ -52,7 +51,7 @@
 <form  hidden id="h_div" class="layui-form "  lay-filter="customersave">
 		<div class="layui-form-item" id="phone">
 			<div class="layui-inline">
-			<label class="layui-form-label">客户用户</label>
+			<label class="layui-form-label">客户姓名</label>
 			<div class="layui-input-inline">
 				<input name="customer_name" type="text" class="layui-input kong"  lay-verify="required">
 			</div>
@@ -150,26 +149,26 @@ table.on('toolbar(customertable)', function(obj) {
 			layer.alert("请先选中数据，然后操作。");
 			return false;
 		}else if(data.length==1){
-			msg="确定要删除"+data[0].Customer_realname+"账户的信息吗？";
+			msg="确定要删除"+data[0].Customer_name+"账户的信息吗？";
 		}else{
-			msg="确定要删除"+data[0].Customer_realname+"等，"+data.length+"账户的信息吗？";
+			msg="确定要删除"+data[0].Customer_name+"等，"+data.length+"条账户的信息吗？";
 		}
 		layer.confirm(msg,{
 			btn:['确定','取消']
 		},function(){
-			//alert(123);
 			//点击确定之后执行
 			//将要删除的数据发送到后台
 			var customerids = "";
 			for(var i=0;i<data.length;i++){
-				userids+=data[i].User_id+",";
+				customerids+=data[i].Customer_id+",";
+				//console.log(customerids);
 			}
 			$.post("customer_del_more",{"customerids":customerids}, function(d){
 				//删除后关闭对话框
 				layer.closeAll();
-				layer.msg('账户删除成功。');
+				layer.msg('客户删除成功。');
 				//表格重新加载
-				table.reload('usertable_id');
+				table.reload('customertable_id');
 			});
 			//后台执行删除SQL语句
 		},
@@ -181,7 +180,7 @@ table.on('toolbar(customertable)', function(obj) {
 		break;
 	case 'refresh':
 		table.reload('customertable_id',{
-			url : 'customer_list',
+			url : 'customer_all_list',
 			where : {
 				"check" : ''
 			}
@@ -230,7 +229,7 @@ table.on('tool(customertable)', function(obj) {
 	//console.log(data);
 	switch (obj.event) {
 	case 'update':
-		//$("update_h_div [name=user_sex]").val(data.user_sex);
+		//$("update_h_div [name=customer_sex]").val(data.customer_sex);
 		form.val("customerupdate",{
 			'customer_name':data.Customer_realname,
 			'customer_liaison':data.Customer_iaison,
@@ -260,7 +259,7 @@ table.on('tool(customertable)', function(obj) {
 		break;
 	case 'del':
 		//编写业务代码
-		//alert(data.user_realname);
+		//alert(data.customer_realname);
 		layer.confirm("确定要删除"+data.Customer_realname+"账户的信息吗？",{
 			btn:['确定','取消']
 		

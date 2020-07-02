@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<base href="<%=basePath%>"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -46,7 +47,7 @@
 <form  hidden id="h_div" class="layui-form "  lay-filter="usersave">
 		<div class="layui-form-item" id="phone">
 			<div class="layui-inline">
-			<label class="layui-form-label">账号</label>
+			<label class="layui-form-label">登录名</label>
 			<div class="layui-input-inline">
 				<input  id="user_loginname" name="user_loginname" type="text" class="layui-input kong"  lay-verify="required">
 			</div>
@@ -64,8 +65,8 @@
 			<div class="layui-inline"">
 				<label class="layui-form-label">性别</label>
 				<div class="layui-input-block">
-					<input id="sys_sex0" type="radio" value="男"  name="sys_sex" title="男" lay-filter="test">
-					<input id="sys_sex1" type="radio" value="女" name="sys_sex" title="女" lay-filter="test">
+					<input id="sys_sex0" type="radio" value="男"  name="user_sex" title="男" lay-filter="test">
+					<input id="sys_sex1" type="radio" value="女" name="user_sex" title="女" lay-filter="test">
 				</div>
 			</div>
 		</div>
@@ -156,7 +157,7 @@ table.on('toolbar(usertable)', function(obj) {
 			msg="确定要删除"+data[0].User_realname+"等，"+data.length+"条账户的信息吗？";
 		}
 		
-		
+	
 		layer.confirm(msg,{
 			btn:['确定','取消']
 		},function(){
