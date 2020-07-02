@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.st.dao.UserDao">
+<!-- SQL语句 -->
+
+	<select id="test" resultType="string">
+		select now()
+	</select>
+	
+<select id="user_list" resultType="map" parameterType="map">
+	select * from Crm_user where user_id like '%${check}%' or 
+	user_loginname like '%${check}%' or 
+	user_loginpass like '%${check}%' or 
+	user_realname like '%${check}%'
+	limit ${start},${limit}
+</select>
+	
+	<select id="getCount" resultType="int" parameterType="map">
+	select count(user_id) from Crm_user where user_id like '%${check}%' or 
+	user_loginname like '%${check}%' or 
+	user_realname like '%${check}%'
+</select>
+
+<delete id="user_del" parameterType="map">
+   delete from crm_user where User_id=#{User_id}
+</delete>
+
+<insert id="user_save" parameterType="map">
+    insert into crm_user(user_id, user_loginname, user_loginpass, user_realname)
+    values (#{uuid}, #{user_loginname},#{user_loginpass}, #{user_realname})
+</insert>
+<update id="user_update" parameterType="map">
+   update crm_user set User_realname=#{user_realname},
+   where User_id=#{user_id},User_sex=#{user_sex},User_tel=#{user_tel},User_addr=#{user_addr}
+</update>
+<delete id="user_del_more" parameterType="map">
+    delete from Crm_user where User_id in (${userids})
+</delete>
+</mapper>
