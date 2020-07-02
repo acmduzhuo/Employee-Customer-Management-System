@@ -35,6 +35,6 @@
    where User_id=#{user_id},User_sex=#{user_sex},User_tel=#{user_tel},User_addr=#{user_addr}
 </update>
 <delete id="user_del_more" parameterType="map">
-    delete from Crm_user where User_id in (${userids})
+    delete from crm_user where User_id in (${userids})
 </delete>
 </mapper>

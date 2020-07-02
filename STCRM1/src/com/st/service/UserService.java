@@ -44,6 +44,7 @@ public class UserService {
 		//要执行删除
 		//in('','','')
 		//参数
+		ParamsUtil.arr_str(params,"userids");
 		user_dao.user_del_more(params);
 	}
 }

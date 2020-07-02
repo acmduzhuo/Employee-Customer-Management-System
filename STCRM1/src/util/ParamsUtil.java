@@ -27,13 +27,13 @@ public class ParamsUtil {
 	/*
 	 * 将字符串变为'A','B'格式方便sql使用
 	 */
-	public static void arr_str(Map params, String key) {
+	public static void arr_str(Map params,Object key) {
 		String arr_str = params.get(key) +"";
 		arr_str = arr_str.substring(0,arr_str.length()-1);
 		arr_str = arr_str.replaceAll(",", "','");
 		arr_str="'"+arr_str+"'";
 		params.put(key, arr_str);
-		System.out.println(params);
+		System.out.println(params.get(key));
 	}
 	public static void state(Map params,int state) {
 		params.put("state", state);

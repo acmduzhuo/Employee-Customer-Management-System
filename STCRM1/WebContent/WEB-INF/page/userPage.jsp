@@ -142,35 +142,34 @@ table.on('toolbar(usertable)', function(obj) {
 	var checkStatus = table.checkStatus('usertable_id');
 	var data = checkStatus.data;
 	//在浏览器控制台打印
-	
 	switch (obj.event) {
 	case 'del':
 		//如果只有一条信息
-		var msg = "";
+		var msg="";
 		if(data.length==0){
 			//无数据被选中
-			//console.log(data);
 			layer.alert("请先选中数据，然后操作。");
 			return false;
 		}else if(data.length==1){
 			msg="确定要删除"+data[0].User_realname+"账户的信息吗？";
 		}else{
-			msg="确定要删除"+data[0].User_realname+"等，"+data.length+"账户的信息吗？";
+			msg="确定要删除"+data[0].User_realname+"等，"+data.length+"条账户的信息吗？";
 		}
+		
+		
 		layer.confirm(msg,{
 			btn:['确定','取消']
 		},function(){
-			//alert(123);
 			//点击确定之后执行
 			//将要删除的数据发送到后台
-			var userids = "";
+			var userids="";
 			for(var i=0;i<data.length;i++){
 				userids+=data[i].User_id+",";
 			}
 			$.post("user_del_more",{"userids":userids}, function(d){
 				//删除后关闭对话框
 				layer.closeAll();
-				layer.msg('账户删除成功。');
+				layer.msg('账户信息删除成功',{icon:6,time:2000});
 				//表格重新加载
 				table.reload('usertable_id');
 			});

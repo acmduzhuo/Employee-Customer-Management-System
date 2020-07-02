@@ -44,7 +44,7 @@ public class UserAction {
 	@ResponseBody
 	public void user_del(@RequestParam Map params) {
 		//删除用户信息
-		System.out.println(params);
+		//System.out.println(params);
 		user_ser.user_del(params);
 	}
 	@RequestMapping("user_save")
@@ -60,7 +60,7 @@ public class UserAction {
 	@RequestMapping("user_del_more")
 	@ResponseBody
 	public void user_del_more(@RequestParam Map params) {
-		//System.out.println(params);
+		System.out.println(params);
 		user_ser.user_del_more(params);
 	}
 }
