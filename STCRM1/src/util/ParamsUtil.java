@@ -35,11 +35,12 @@ public class ParamsUtil {
 		params.put(key, arr_str);
 		System.out.println(params.get(key));
 	}
+	
 	public static void state(Map params,int state) {
 		params.put("state", state);
 	}
-	public static void loginUserId(Map params, HttpSession session) {
-		String loginUserId = "73c52aa4-af50-4564-a1dc-77654f61e632";
-		params.put("loginUserId", loginUserId);
+	public static void loginUserID(Map params, HttpSession session) {
+		String loginUserID = "ef44d16f-4220-445d-97ba-5332dd8b85e8";
+		params.put("loginUserID", loginUserID);
 	}
 }

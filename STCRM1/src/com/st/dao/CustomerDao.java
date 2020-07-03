@@ -14,9 +14,19 @@ public interface CustomerDao {
 	void customer_del_more(Map params);
 	void customer_update(Map params);
 	void customer_del(Map params);
+	/**
+	 * 
+	 * 公海客户
+	 * @return
+	 */
 	int getPublicCount(Map params);
     List customer_public_list(Map params);
     void customer_private(Map params);
+    /**
+        * 跟单客户
+     * @param params
+     * @return
+     */
     int getPrivateCount(Map params);
     List customer_private_list(Map params);
 }

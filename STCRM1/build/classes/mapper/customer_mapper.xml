@@ -3,11 +3,11 @@
 <!-- 命名空间应该是对应接口的包名+接口名 -->
 <mapper namespace="com.st.dao.CustomerDao">
    <sql id="customer_select_where">
-           Customer_id like '%${check}%' or
-           Customer_name like '%${check}%' or
-           Customer_tel like '%${check}%' or
-           Customer_addr like '%${check}%' or
-           Customer_liaison like '%${check}%' 
+       Customer_id like '%${check}%' or
+       Customer_name like '%${check}%' or
+       Customer_tel like '%${check}%' or
+       Customer_addr like '%${check}%' or
+       Customer_liaison like '%${check}%' 
    </sql>
 	
 <select id="customer_list" resultType="map" parameterType="map">
@@ -54,13 +54,15 @@
      delete from crm_customer where Customer_id=#{Customer_id}
 </delete>
 
+
+<!-- 公海客户 -->
 <select id="getPublicCount" parameterType="map" resultType="int">
-    select count(*) from crm_customer 
+    select count(*) from crm_customer
     <where>
     (
     <include refid="customer_select_where"></include>
     )
-    and customer_state = 0
+    and Customer_state = 0
     </where>
 </select>
 <select id="customer_public_list" parameterType="map" resultType="map">
@@ -69,16 +71,17 @@
     (
     <include refid="customer_select_where"></include>
     )
-     and customer_state = 0
+    and Customer_state = 0
     </where>
     limit ${start},${limit}
 </select>
 <update id="customer_private" parameterType="map" >
-    update crm_customer set customer_state={#state},
-    customer_user_id={loginUserID}
-    where customer_id = {#customer_id}
+    update crm_customer set Customer_state=#{state}
+    ,Customer_user_id=#{loginUserID}
+    where Customer_id = #{Customer_id}
 </update>
 
+<!-- 跟单客户 -->
 <select id="getPrivateCount" parameterType="map" resultType="int">
     select count(*) from crm_customer 
     <where>
@@ -96,9 +99,7 @@
     )
      and customer_state = 1  and customer_user_id = #{loginUserID}
     </where>
-    limit ${start},${limit}
 </select>
-
 <update id="customer_public"  parameterType="map">
      update Crm_customer set customer_state=0, cutomer_user_id='' where
      customer_id={#customer_id}

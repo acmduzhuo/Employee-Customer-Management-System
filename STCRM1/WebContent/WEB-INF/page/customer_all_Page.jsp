@@ -34,14 +34,14 @@
       <th lay-data="{field:'Customer_name',sort: true }">客户名</th>
       <th lay-data="{field:'Customer_liaison',sort: true}">联系人</th>
       <th lay-data="{field:'Customer_tel',sort: true}">手机号码</th>
-      <th lay-data="{field:'Customer_state', sort: true}">状态</th>
-      <!-- , templet:function(data){
+      <th lay-data="{field:'Customer_state', sort: true,
+      templet:function(data){
       if(data.Customer_state==0){
           return '公海客户';
-      }esle{
+      }else{
           return '私有客户';
       }
-      } -->
+      }}">状态</th>
       <th lay-data="{field:'Customer_addr', sort: true}">住址</th>
       <th lay-data="{toolbar:'#rowtoolbar'}">操作</th>
     </tr>

@@ -51,6 +51,11 @@ public class CustomerService {
 	public void customer_del(Map params) {
 		cusDao.customer_del(params);
 	}
+	/**
+	 * 
+	 * 公海客户
+	 * @return
+	 */
 	public int getPublicCount(Map params) {
 		return cusDao.getPublicCount(params);
 	}
@@ -60,9 +65,14 @@ public class CustomerService {
 	}
 	public void customer_private(Map params) {
 		ParamsUtil.state(params, 1);
-		ParamsUtil.loginUserId(params, null);
+		//当前登录用户
+		ParamsUtil.loginUserID(params, null);
 		cusDao.customer_private(params);
 	}
+	/**
+	 * 跟单客户
+	 * @param params
+	 */
 	public int getPrivateCount(Map params) {
 		return cusDao.getPrivateCount(params);
 	}

@@ -23,9 +23,9 @@
 </script>
 <script type="text/html" id="rowtoolbar">
 	<a class="layui-btn layui-btn-xs layui-icon layui-icon-edit" lay-event="update">编辑</a>
-    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="private">跟單</a>
+    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="private">跟单</a>
 </script>
-<table class="layui-table" lay-data="{url:'customer_private_list', page:true, id:'customertable_id',toolbar:'#toolbar'}" lay-filter="customertable">
+<table class="layui-table" lay-data="{url:'customer_public_list', page:true, id:'customertable_id',toolbar:'#toolbar'}" lay-filter="customertable">
   <thead>
     <tr>
      <th lay-data="{type:'checkbox'}"></th>
@@ -34,14 +34,14 @@
       <th lay-data="{field:'Customer_name',sort: true }">客户名</th>
       <th lay-data="{field:'Customer_liaison',sort: true}">联系人</th>
       <th lay-data="{field:'Customer_tel',sort: true }">手机号码</th>
-     <th lay-data="{field:'Customer_state', sort: true}">状态</th>
-  <!--    , templet:function(data){
+           <th lay-data="{field:'Customer_state', sort: true,
+      templet:function(data){
       if(data.Customer_state==0){
-          return '公海客户';
-      }esle{
+          return '公海客户'
+      }else{
           return '私有客户';
       }
-      } -->
+      }}">状态</th>
       <th lay-data="{field:'Customer_addr', sort: true}">住址</th>
       <th lay-data="{toolbar:'#rowtoolbar'}">操作</th>
     </tr>
@@ -51,26 +51,17 @@
 <form  hidden id="h_div" class="layui-form "  lay-filter="customersave">
 		<div class="layui-form-item" id="phone">
 			<div class="layui-inline">
-			<label class="layui-form-label">账号</label>
+			<label class="layui-form-label">客户名</label>
 			<div class="layui-input-inline">
-				<input  id="customer_loginname" name="customer_loginname" type="text" class="layui-input kong"  lay-verify="required">
+				<input name="customer_name" type="text" class="layui-input kong"  lay-verify="required">
 			</div>
 		</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-inline">
-				<label class="layui-form-label">真实姓名</label>
+				<label class="layui-form-label">联系人</label>
 				<div class="layui-input-inline">
-					<input  id="customer_realname" name="customer_realname" type="text" autocomplete="off" class="layui-input kong" lay-verify="required">
-				</div>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline"">
-				<label class="layui-form-label">性别</label>
-				<div class="layui-input-block">
-					<input id="sys_sex0" type="radio" value="男"  name="customer_sex" title="男" lay-filter="test">
-					<input id="sys_sex1" type="radio" value="女" name="customer_sex" title="女" lay-filter="test">
+					<input name="customer_liaison" type="text"  class="layui-input kong" lay-verify="required">
 				</div>
 			</div>
 		</div>
@@ -78,7 +69,7 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">手机号</label>
 				<div class="layui-input-inline">
-					<input name="customer_tel"  type="text" autocomplete="off" class="layui-input kong" lay-verify="required|phone">
+					<input name="customer_tel"  type="text" class="layui-input kong" lay-verify="required|phone">
 				</div>
 			</div>
 		</div>
@@ -94,11 +85,11 @@
 	
 	<form  hidden id="update_h_div" class="layui-form "  lay-filter="customerupdate">
 	    <input type='hidden' name="customer_id"/>
-		<div class="layui-form-item" id="phone">
+		<div class="layui-form-item">
 			<div class="layui-inline">
-			<label class="layui-form-label">登录用户</label>
+			<label class="layui-form-label">客户名</label>
 			<div class="layui-input-inline">
-				<input id="customer_loginname" name="customer_loginname" type="text" class="layui-input kong"  lay-verify="required">
+				<input name="customer_name" type="text" class="layui-input kong"  lay-verify="required">
 			</div>
 		</div>
 		</div>
@@ -106,24 +97,16 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">联系人</label>
 				<div class="layui-input-inline">
-					<input  id="customer_realname" name="customer_realname" type="text" autocomplete="off" class="layui-input kong" lay-verify="required">
+					<input name="customer_liaison" type="text" class="layui-input kong" lay-verify="required">
 				</div>
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline"">
-				<label class="layui-form-label">性别</label>
-				<div class="layui-input-block">
-					<input id="sys_sex0" type="radio" value="男"  name="customer_sex" title="男" lay-filter="test">
-					<input id="sys_sex1" type="radio" value="女" name="customer_sex" title="女" lay-filter="test">
-				</div>
-			</div>
-		</div>
+
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label">手机号</label>
 				<div class="layui-input-inline">
-					<input name="customer_tel"  type="text" autocomplete="off" class="layui-input kong" lay-verify="required|phone">
+					<input name="customer_tel"  type="text" class="layui-input kong" lay-verify="required|phone">
 				</div>
 			</div>
 		</div>
@@ -152,7 +135,7 @@ table.on('toolbar(customertable)', function(obj) {
 	
 	case 'refresh':
 		table.reload('customertable_id',{
-			url : 'customer_private_list',
+			url : 'customer_public_list',
 			where : {
 				"check" : ''
 			}
@@ -162,7 +145,7 @@ table.on('toolbar(customertable)', function(obj) {
 		//console.log($("#check").val());
 		//查询管理员信息
 		table.reload('customertable_id', {
-			url : 'customer_private_list',
+			url : 'customer_public_list',
 			where : {
 				"check" : $("#check").val()
 			}
@@ -170,7 +153,7 @@ table.on('toolbar(customertable)', function(obj) {
 		break;
 	case 'insert':
 		//把表单中的内容清空掉
-		form.val("usersave",{
+		form.val("customersave",{
 			'customer_name':'',
 			'customer_liaison':'',
 			'customer_addr':'',
@@ -183,7 +166,7 @@ table.on('toolbar(customertable)', function(obj) {
 					content : $("#h_div"),
 					btn : [ '确定', '取消' ],
 					btn1 : function() {
-						$.post("user_save",form.val("customersave"), function() {
+						$.post("customer_save",form.val("customersave"), function() {
 							layer.closeAll();
 							layer.alert('默认密码:123456',{title:'新增用户信息'});
 							table.reload('customertable_id');
@@ -205,14 +188,16 @@ table.on('tool(customertable)', function(obj) {
 	//console.log(data);
 	switch (obj.event) {
 	case 'private':
-		layer.confirm("确定要对"+data.customer_name+"跟单吗？",{
+		layer.confirm("确定要对"+data.Customer_name+"跟单吗？",{
 			btn:['确定','取消']
 		},function(){
 			//点击第一个按钮执行方法
-			layer.msg(data.Customer_name+"已成为您的私有客户",{
-				icon:6,time:2000
-			});
 			$.post("customer_private",data,function(d){
+				//执行成功表格重新刷新
+				layer.msg(data.Customer_name+"已成为您的私有客户",{
+					icon:6,
+					time:2000
+			        });
 				table.reload('customertable_id');
 			});
 		});
@@ -220,8 +205,8 @@ table.on('tool(customertable)', function(obj) {
 	case 'update':
 		//$("update_h_div [name=user_sex]").val(data.user_sex);
 		form.val("customerupdate",{
-			'customer_name':data.Customer_realname,
-			'customer_liaison':data.Customer_iaison,
+			'customer_name':data.Customer_name,
+			'customer_liaison':data.Customer_liaison,
 			'customer_addr':data.Customer_addr,
 			'customer_tel':data.Customer_tel,
 			'customer_id':data.Customer_id
@@ -229,7 +214,7 @@ table.on('tool(customertable)', function(obj) {
 		//弹出对话框
 		layer.open({
 					type : 1,
-					title : '编辑用户信息',
+					title : '编辑公海客户信息',
 					content : $("#update_h_div"),
 					btn : [ '确定', '取消' ],
 					btn1 : function() {

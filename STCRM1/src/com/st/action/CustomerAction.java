@@ -30,12 +30,6 @@ public class CustomerAction {
 		int count=cusSer.getCount(params);
 		return new TableJson(count, cusSer.customer_list(params));
 	}
-	//跳转到公海客户信息页面
-	@RequestMapping("/customer_public_page")
-	public String customer_public_page() {
-		return "customer_public_Page";
-	}
-	
 	@RequestMapping("customer_save")
 	@ResponseBody
 	public void customer_save(@RequestParam Map params) {
@@ -60,12 +54,34 @@ public class CustomerAction {
 	public void customer_update(@RequestParam Map params) {
 		cusSer.customer_update(params);
 	}
+	
+	/**
+	 * 跳转到公海客户信息页面
+	 * @return
+	 */
+	@RequestMapping("/customer_public_page")
+	public String customer_public_page() {
+		return "customer_public_Page";
+	}
+	//页面显示数据
 	@RequestMapping("customer_public_list")
 	@ResponseBody
+	//ajax返回数据
 	public TableJson customer_public_list(@RequestParam Map params) {
 		int count=cusSer.getPublicCount(params);
-		return new TableJson(count,cusSer.customer_public_list(params));
+		List list=cusSer.customer_public_list(params);
+		return new TableJson(count,list);
+		//(count,cusSer.customer_public_list(params));
 	}
+	@RequestMapping("customer_private")
+	@ResponseBody
+	public void customer_private(@RequestParam Map params) {
+		cusSer.customer_private(params);
+	}
+	/**
+	 * 跟单客户
+	 * @return
+	 */
 	@RequestMapping("customer_private_page")
 	public String customer_private_page() {
 		return "customer_private_Page";
@@ -75,10 +91,5 @@ public class CustomerAction {
 	public TableJson customer_private_list(@RequestParam Map params) {
 		int count=cusSer.getPrivateCount(params);
 		return new TableJson(count,cusSer.customer_private_list(params));
-	}
-	@RequestMapping("customer_public")
-	@ResponseBody
-	public void customer_public(@RequestParam Map params) {
-		
 	}
 }
