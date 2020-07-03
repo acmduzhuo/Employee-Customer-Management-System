@@ -51,7 +51,7 @@
 <form  hidden id="h_div" class="layui-form "  lay-filter="customersave">
 		<div class="layui-form-item" id="phone">
 			<div class="layui-inline">
-			<label class="layui-form-label">客户姓名</label>
+			<label class="layui-form-label">客户名</label>
 			<div class="layui-input-inline">
 				<input name="customer_name" type="text" class="layui-input kong"  lay-verify="required">
 			</div>
@@ -61,7 +61,7 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">联系人</label>
 				<div class="layui-input-inline">
-					<input name="customer_liaison" type="text" autocomplete="off" class="layui-input kong" lay-verify="required">
+					<input name="customer_liaison" type="text"  class="layui-input kong" lay-verify="required">
 				</div>
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">手机号</label>
 				<div class="layui-input-inline">
-					<input name="customer_tel"  type="text" autocomplete="off" class="layui-input kong" lay-verify="required|phone">
+					<input name="customer_tel"  type="text" class="layui-input kong" lay-verify="required|phone">
 				</div>
 			</div>
 		</div>
@@ -85,11 +85,11 @@
 	
 	<form  hidden id="update_h_div" class="layui-form "  lay-filter="customerupdate">
 	    <input type='hidden' name="customer_id"/>
-		<div class="layui-form-item" id="phone">
+		<div class="layui-form-item">
 			<div class="layui-inline">
-			<label class="layui-form-label">登录用户</label>
+			<label class="layui-form-label">客户名</label>
 			<div class="layui-input-inline">
-				<input id="customer_loginname" name="customer_loginname" type="text" class="layui-input kong"  lay-verify="required">
+				<input name="customer_name" type="text" class="layui-input kong"  lay-verify="required">
 			</div>
 		</div>
 		</div>
@@ -97,24 +97,16 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">联系人</label>
 				<div class="layui-input-inline">
-					<input  id="customer_realname" name="customer_realname" type="text" autocomplete="off" class="layui-input kong" lay-verify="required">
+					<input name="customer_liaison" type="text" class="layui-input kong" lay-verify="required">
 				</div>
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline"">
-				<label class="layui-form-label">性别</label>
-				<div class="layui-input-block">
-					<input id="sys_sex0" type="radio" value="男"  name="customer_sex" title="男" lay-filter="test">
-					<input id="sys_sex1" type="radio" value="女" name="customer_sex" title="女" lay-filter="test">
-				</div>
-			</div>
-		</div>
+
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label">手机号</label>
 				<div class="layui-input-inline">
-					<input name="customer_tel"  type="text" autocomplete="off" class="layui-input kong" lay-verify="required|phone">
+					<input name="customer_tel"  type="text" class="layui-input kong" lay-verify="required|phone">
 				</div>
 			</div>
 		</div>
@@ -197,8 +189,10 @@ table.on('toolbar(customertable)', function(obj) {
 	case 'insert':
 		//把表单中的内容清空掉
 		form.val("customersave",{
-			'customer_realname':'',
-			'customer_loginname':''
+			'customer_name':'',
+			'customer_liaison':'',
+			'customer_addr':'',
+			'customer_tel':''
 		});
 		//弹出对话框，供客户填写数据
 		layer.open({
@@ -231,8 +225,8 @@ table.on('tool(customertable)', function(obj) {
 	case 'update':
 		//$("update_h_div [name=customer_sex]").val(data.customer_sex);
 		form.val("customerupdate",{
-			'customer_name':data.Customer_realname,
-			'customer_liaison':data.Customer_iaison,
+			'customer_name':data.Customer_name,
+			'customer_liaison':data.Customer_liaison,
 			'customer_addr':data.Customer_addr,
 			'customer_tel':data.Customer_tel,
 			'customer_id':data.Customer_id
@@ -240,7 +234,7 @@ table.on('tool(customertable)', function(obj) {
 		//弹出对话框
 		layer.open({
 					type : 1,
-					title : '编辑用户信息',
+					title : '编辑客户信息',
 					content : $("#update_h_div"),
 					btn : [ '确定', '取消' ],
 					btn1 : function() {
@@ -260,17 +254,17 @@ table.on('tool(customertable)', function(obj) {
 	case 'del':
 		//编写业务代码
 		//alert(data.customer_realname);
-		layer.confirm("确定要删除"+data.Customer_realname+"账户的信息吗？",{
+		layer.confirm("确定要删除"+data.Customer_name+"账户的信息吗？",{
 			btn:['确定','取消']
 		
 		},function(){
-			//alert(123);
 			//点击确定之后执行
 			//将要删除的数据发送到后台
 			$.post("customer_del",data, function(d){
 				//删除后关闭对话框
 				layer.closeAll();
 				//表格重新加载
+				layer.msg(data.Customer_name+'客户信息删除成功！',{icon:6,time:2000});
 				table.reload('customertable_id');
 			});
 			//后台执行删除SQL语句

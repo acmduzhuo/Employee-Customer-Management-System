@@ -33,6 +33,9 @@ public class CustomerService {
 //		}
 		params.put("customer_user_id", "");
 		params.put("customer_state", "0");
+		//params.put("customer_liaison", "³Â´«´ï");
+//		System.out.println("Sercice");
+//		System.out.println(params);
 		cusDao.customer_save(params);
 	}
 	public void customer_del_more(Map params) {
@@ -40,11 +43,13 @@ public class CustomerService {
 		//System.out.println("customerids");
 		cusDao.customer_del_more(params);
 	}
-	public void customer_del(Map params) {
-		cusDao.customer_del(params);
-	}
 	public void customer_update(Map params) {
 		cusDao.customer_update(params);
+//		System.out.println("Sercice");
+//		System.out.println(params);
+	}
+	public void customer_del(Map params) {
+		cusDao.customer_del(params);
 	}
 	public int getPublicCount(Map params) {
 		return cusDao.getPublicCount(params);

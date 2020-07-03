@@ -17,8 +17,9 @@
 </select>
 	
 	<select id="getCount" resultType="int" parameterType="map">
-	select count(user_id) from crm_user where user_id like '%${check}%' or 
-	user_loginname like '%${check}%' or 
+	select count(user_id) from crm_user 
+	where user_id like '%${check}%' or 
+	user_loginname like '%${check}%' or
 	user_realname like '%${check}%'
 </select>
 
@@ -31,8 +32,12 @@
     values (#{uuid}, #{user_loginname},#{user_loginpass}, #{user_realname},#{user_addr},#{user_tel},#{user_sex})
 </insert>
 <update id="user_update" parameterType="map">
-   update crm_user set User_realname=#{user_realname},
-   where User_id=#{user_id},User_sex=#{user_sex},User_tel=#{user_tel},User_addr=#{user_addr}
+   update crm_user 
+   set User_realname=#{user_realname},
+   User_sex=#{user_sex},
+   User_tel=#{user_tel},
+   User_addr=#{user_addr}
+   where User_id=#{user_id}
 </update>
 <delete id="user_del_more" parameterType="map">
     delete from crm_user where User_id in (${userids})

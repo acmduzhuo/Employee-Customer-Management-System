@@ -32,12 +32,28 @@
 
 <!-- 第一层与数据库有关 -->
 <insert id="customer_save" parameterType="map">
-    insert into crm_customer (Customer_id,Customer_name,Customer_tel,Customer_addr,Customer_state,Customer_user_id,Customer_liaison)
-    values(#{uuid},#{customer_name},#{customer_tel},#{customer_addr},#{customer_state},#{customer_user_id},#{customer_liasion})
+    insert into crm_customer (Customer_id,Customer_liaison,Customer_name,Customer_tel,Customer_addr,Customer_state,Customer_user_id)
+    values(#{uuid},#{customer_liaison},#{customer_name},#{customer_tel},#{customer_addr},#{customer_state},#{customer_user_id})
 </insert>
+
 <delete id="customer_del_more" parameterType="map">
      delete from crm_customer where Customer_id in (${customerids})
 </delete>
+
+<update id="customer_update" parameterType="map">
+     update crm_customer 
+     set Customer_name=#{customer_name},
+     Customer_liaison=#{customer_liaison},
+     Customer_tel=#{customer_tel},
+     Customer_addr=#{customer_addr}
+     where Customer_id = #{customer_id}
+</update>
+
+<!-- 没有在前台规定，需要原始的大写 -->
+<delete id="customer_del" parameterType="map">
+     delete from crm_customer where Customer_id=#{Customer_id}
+</delete>
+
 <select id="getPublicCount" parameterType="map" resultType="int">
     select count(*) from crm_customer 
     <where>

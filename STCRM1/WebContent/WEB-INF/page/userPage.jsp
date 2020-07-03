@@ -204,7 +204,11 @@ table.on('toolbar(usertable)', function(obj) {
 		//把表单中的内容清空掉
 		form.val("usersave",{
 			'user_realname':'',
-			'user_loginname':''
+			'user_loginname':'',
+			'user_sex':'',
+			'user_addr':'',
+			'user_tel':'',
+			'user_id':''
 		});
 		//弹出对话框，供客户填写数据
 		layer.open({
@@ -253,7 +257,7 @@ table.on('tool(usertable)', function(obj) {
 					btn1 : function() {
 						$.post("user_update",form.val("userupdate"), function() {
 							layer.closeAll();
-							layer.msg(data.User_loginname+'账户信息修改成功！',{icon:6,time:2000});
+							layer.msg(data.User_realname+'账户信息修改成功！',{icon:6,time:2000});
 							table.reload('usertable_id');
 						});
 					},

@@ -12,8 +12,8 @@ public interface CustomerDao {
 	List customer_list(Map params);
 	void customer_save(Map params);
 	void customer_del_more(Map params);
-	void customer_del(Map params);
 	void customer_update(Map params);
+	void customer_del(Map params);
 	int getPublicCount(Map params);
     List customer_public_list(Map params);
     void customer_private(Map params);
