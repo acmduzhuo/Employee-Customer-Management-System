@@ -33,7 +33,7 @@
 <!-- 第一层与数据库有关 -->
 <insert id="customer_save" parameterType="map">
     insert into crm_customer (Customer_id,Customer_liaison,Customer_name,Customer_tel,Customer_addr,Customer_state,Customer_user_id)
-    values(#{uuid},#{customer_liaison},#{customer_name},#{customer_tel},#{customer_addr},#{customer_state},#{customer_user_id})
+    values(#{uuid},#{customer_liaison},#{customer_name},#{customer_tel},#{customer_addr},#{state},#{loginUserID})
 </insert>
 
 <delete id="customer_del_more" parameterType="map">
@@ -88,20 +88,21 @@
     (
     <include refid="customer_select_where"></include>
     )
-    and customer_state = 1
+    and Customer_state=1  and Customer_user_id=#{loginUserID}
     </where>
 </select>
 <select id="customer_private_list" parameterType="map" resultType="map">
-    select * from Crm_customer
+    select * from crm_customer
     <where>
     (
     <include refid="customer_select_where"></include>
     )
-     and customer_state = 1  and customer_user_id = #{loginUserID}
+    and Customer_state=1  and Customer_user_id=#{loginUserID}
     </where>
+    limit ${start},${limit}
 </select>
 <update id="customer_public"  parameterType="map">
-     update Crm_customer set customer_state=0, cutomer_user_id='' where
-     customer_id={#customer_id}
+     update crm_customer set Customer_state=0, Customer_user_id=''
+     where Customer_id=#{Customer_id}
 </update>
 </mapper>

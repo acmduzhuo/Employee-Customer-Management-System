@@ -90,6 +90,12 @@ public class CustomerAction {
 	@ResponseBody
 	public TableJson customer_private_list(@RequestParam Map params) {
 		int count=cusSer.getPrivateCount(params);
-		return new TableJson(count,cusSer.customer_private_list(params));
+		List list=cusSer.customer_private_list(params);
+		return new TableJson(count,list);
+	}
+	@RequestMapping("customer_public")
+	@ResponseBody
+	public void customer_public(@RequestParam Map params) {
+		cusSer.customer_public(params);
 	}
 }

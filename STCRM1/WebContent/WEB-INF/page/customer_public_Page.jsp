@@ -30,7 +30,7 @@
     <tr>
      <th lay-data="{type:'checkbox'}"></th>
      <th lay-data="{type:'numbers'}">行号</th>
-      <th lay-data="{field:'Customer_id', sort: true}">ID</th>
+<!--       <th lay-data="{field:'Customer_id', sort: true}">ID</th> -->
       <th lay-data="{field:'Customer_name',sort: true }">客户名</th>
       <th lay-data="{field:'Customer_liaison',sort: true}">联系人</th>
       <th lay-data="{field:'Customer_tel',sort: true }">手机号码</th>

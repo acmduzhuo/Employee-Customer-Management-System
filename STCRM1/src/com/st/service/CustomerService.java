@@ -23,19 +23,16 @@ public class CustomerService {
 	}
 	public void customer_save(Map params) {
 		ParamsUtil.uuid(params);
-//		String str=params.get("private")+"";
-//		if("null".equals(str)) {
-//			params.put("loginUserID", "");
-//			params.put("customer_state", "0");
-//		}else {
-//			ParamsUtil.LoginUserID(params,null);
-//			params.put(params, 1);
-//		}
-		params.put("customer_user_id", "");
-		params.put("customer_state", "0");
-		//params.put("customer_liaison", "³Â´«´ï");
-//		System.out.println("Sercice");
-//		System.out.println(params);
+		String str=params.get("private") + "";
+		System.out.println("Service");
+		System.out.println(str);
+		if("null".equals(str)) {
+			params.put("loginUserID", "");
+			ParamsUtil.state(params, 0);
+		}else {
+			ParamsUtil.loginUserID(params,null);
+			ParamsUtil.state(params, 1);
+		}
 		cusDao.customer_save(params);
 	}
 	public void customer_del_more(Map params) {
@@ -74,10 +71,15 @@ public class CustomerService {
 	 * @param params
 	 */
 	public int getPrivateCount(Map params) {
+		ParamsUtil.loginUserID(params, null);
 		return cusDao.getPrivateCount(params);
 	}
 	public List customer_private_list(Map params) {
 		ParamsUtil.page(params);
+		ParamsUtil.loginUserID(params, null);
 		return cusDao.customer_private_list(params);
+	}
+	public void customer_public(Map params) {
+		cusDao.customer_public(params);
 	}
 }

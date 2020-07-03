@@ -29,4 +29,5 @@ public interface CustomerDao {
      */
     int getPrivateCount(Map params);
     List customer_private_list(Map params);
+    void customer_public(Map params);
 }
