@@ -3,13 +3,14 @@ package com.st.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.st.dao.UserDao;
-
-import util.ParamsUtil;
+import com.st.util.ParamsUtil;
 @Service
 public class UserService {
 	@Autowired
@@ -46,5 +47,23 @@ public class UserService {
 		//参数
 		ParamsUtil.arr_str(params,"userids");
 		user_dao.user_del_more(params);
+	}
+	/**
+	 * 登录
+	 */
+	public boolean login(Map params,HttpSession session) {
+		//根据用户名查询数据表中是否有该用户的信息
+		List list=user_dao.user_login(params);
+		if(list!=null&&list.size()==1) {
+			Map user=(Map)list.get(0);
+			//有，匹配密码是否正确     
+			if(params.get("login_pass").equals(((Map)(list.get(0))).get("User_loginpass"))){
+				//正确--登录成功	
+				session.setAttribute("loginuser", user);
+				return true;
+			}
+		}
+		return false;
+		//没有，密码不正确
 	}
 }

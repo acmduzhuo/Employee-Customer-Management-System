@@ -3,6 +3,8 @@ package com.st.action;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.st.bean.TableJson;
 import com.st.service.CustomerService;
-
-import util.ParamsUtil;
+import com.st.util.ParamsUtil;
 
 @Controller
 public class CustomerAction {
@@ -32,9 +33,9 @@ public class CustomerAction {
 	}
 	@RequestMapping("customer_save")
 	@ResponseBody
-	public void customer_save(@RequestParam Map params) {
+	public void customer_save(@RequestParam Map params,HttpSession session) {
 		//System.out.println(params);
-		cusSer.customer_save(params);
+		cusSer.customer_save(params,session);
 	}
 	@RequestMapping("customer_del")
 	@ResponseBody
@@ -75,8 +76,8 @@ public class CustomerAction {
 	}
 	@RequestMapping("customer_private")
 	@ResponseBody
-	public void customer_private(@RequestParam Map params) {
-		cusSer.customer_private(params);
+	public void customer_private(@RequestParam Map params,HttpSession session) {
+		cusSer.customer_private(params,session);
 	}
 	/**
 	 * ¸úµ¥¿Í»§
@@ -88,9 +89,9 @@ public class CustomerAction {
 	}
 	@RequestMapping("customer_private_list")
 	@ResponseBody
-	public TableJson customer_private_list(@RequestParam Map params) {
-		int count=cusSer.getPrivateCount(params);
-		List list=cusSer.customer_private_list(params);
+	public TableJson customer_private_list(@RequestParam Map params,HttpSession session) {
+		int count=cusSer.getPrivateCount(params,session);
+		List list=cusSer.customer_private_list(params,session);
 		return new TableJson(count,list);
 	}
 	@RequestMapping("customer_public")

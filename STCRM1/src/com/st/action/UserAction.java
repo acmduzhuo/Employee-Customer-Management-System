@@ -3,6 +3,8 @@ package com.st.action;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +64,15 @@ public class UserAction {
 	public void user_del_more(@RequestParam Map params) {
 		System.out.println(params);
 		user_ser.user_del_more(params);
+	}
+	/**
+	 * 用户退出
+	 */
+	@RequestMapping("login_out")
+	public String login_out(HttpSession session) {
+		//让session失效
+		session.invalidate();
+		return "login";
 	}
 }
 

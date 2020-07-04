@@ -1,4 +1,4 @@
-  <%@ page language="java" contentType="text/html; charset=UTF-8"
+  <%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"
     pageEncoding="UTF-8"%>
     <%
 	String path = request.getContextPath();
@@ -36,14 +36,14 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
+         ${loginuser.User_realname}
         </a>
         <dl class="layui-nav-child">
           <dd><a href="">基本资料</a></dd>
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>
+      <li class="layui-nav-item"><a href="login_out">退出</a></li>
     </ul>
   </div>
   
@@ -57,7 +57,7 @@
           <dl class="layui-nav-child">
             <dd><a href="javascript:;"url="customer_public_page">公海客户</a></dd>
             <dd><a href="javascript:;"url="customer_private_page">跟单客户</a></dd>
-            <dd><a href="javascript:;" url="customer_all_page">全部客户</a></dd>
+            <dd><a href="javascript:;"url="customer_all_page">全部客户</a></dd>
           </dl>
         </li>
       </ul>

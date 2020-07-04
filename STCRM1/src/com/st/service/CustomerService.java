@@ -3,13 +3,14 @@ package com.st.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.st.dao.CustomerDao;
-
-import util.ParamsUtil;
+import com.st.util.ParamsUtil;
 @Service
 public class CustomerService {
 	@Autowired
@@ -21,7 +22,7 @@ public class CustomerService {
 		ParamsUtil.page(params);
 		return cusDao.customer_list(params);
 	}
-	public void customer_save(Map params) {
+	public void customer_save(Map params,HttpSession session) {
 		ParamsUtil.uuid(params);
 		String str=params.get("private") + "";
 		System.out.println("Service");
@@ -30,7 +31,7 @@ public class CustomerService {
 			params.put("loginUserID", "");
 			ParamsUtil.state(params, 0);
 		}else {
-			ParamsUtil.loginUserID(params,null);
+			ParamsUtil.loginUserID(params,session);
 			ParamsUtil.state(params, 1);
 		}
 		cusDao.customer_save(params);
@@ -60,23 +61,23 @@ public class CustomerService {
 		ParamsUtil.page(params);
 		return cusDao.customer_public_list(params);
 	}
-	public void customer_private(Map params) {
+	public void customer_private(Map params,HttpSession session) {
 		ParamsUtil.state(params, 1);
 		//当前登录用户
-		ParamsUtil.loginUserID(params, null);
+		ParamsUtil.loginUserID(params, session);
 		cusDao.customer_private(params);
 	}
 	/**
 	 * 跟单客户
 	 * @param params
 	 */
-	public int getPrivateCount(Map params) {
-		ParamsUtil.loginUserID(params, null);
+	public int getPrivateCount(Map params,HttpSession session) {
+		ParamsUtil.loginUserID(params, session);
 		return cusDao.getPrivateCount(params);
 	}
-	public List customer_private_list(Map params) {
+	public List customer_private_list(Map params,HttpSession session) {
 		ParamsUtil.page(params);
-		ParamsUtil.loginUserID(params, null);
+		ParamsUtil.loginUserID(params, session);
 		return cusDao.customer_private_list(params);
 	}
 	public void customer_public(Map params) {

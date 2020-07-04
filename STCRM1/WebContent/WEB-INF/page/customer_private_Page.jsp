@@ -163,7 +163,10 @@ table.on('toolbar(customertable)', function(obj) {
 					btn1 : function() {
 						$.post("customer_save",form.val("customersave"), function() {
 							layer.closeAll();
-							layer.alert('默认密码:123456',{title:'新增用户信息'});
+							layer.msg('客户信息保存成功',{
+								icon : 6,
+								time : 2000
+								});
 							table.reload('customertable_id');
 						});
 					},

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,9 @@ public class VisitAction {
 	
 	@RequestMapping("visit_save")
 	@ResponseBody
-	public void visit_save(@RequestParam Map params) {
-		System.out.println(params);
-		visitSer.visit_save(params);
+	public void visit_save(@RequestParam Map params,HttpSession session) {
+		//System.out.println(params);
+		visitSer.visit_save(params,session);
 	}
 	
 	/**

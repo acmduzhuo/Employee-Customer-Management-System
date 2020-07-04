@@ -20,4 +20,9 @@ public interface UserDao {
 	void user_update(Map params);
 	
 	void user_del_more(Map params);
+	
+	/**
+	 * µÇÂ¼
+	 */
+	List user_login(Map params);
 }

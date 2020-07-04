@@ -42,4 +42,9 @@
 <delete id="user_del_more" parameterType="map">
     delete from crm_user where User_id in (${userids})
 </delete>
+
+<!-- 登录 -->
+<select id="user_login" resultType="map" parameterType="map">
+	select * from crm_user where User_loginname=#{login_name}
+</select>
 </mapper>

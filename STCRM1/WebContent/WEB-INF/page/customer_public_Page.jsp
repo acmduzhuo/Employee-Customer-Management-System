@@ -24,6 +24,7 @@
 <script type="text/html" id="rowtoolbar">
 	<a class="layui-btn layui-btn-xs layui-icon layui-icon-edit" lay-event="update">编辑</a>
     <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="private">跟单</a>
+    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="visitlog">回访记录</a>
 </script>
 <table class="layui-table" lay-data="{url:'customer_public_list', page:true, id:'customertable_id',toolbar:'#toolbar'}" lay-filter="customertable">
   <thead>
@@ -43,7 +44,7 @@
       }
       }}">状态</th>
       <th lay-data="{field:'Customer_addr', sort: true}">住址</th>
-      <th lay-data="{toolbar:'#rowtoolbar'}">操作</th>
+      <th lay-data="{toolbar:'#rowtoolbar',width:300}">操作</th>
     </tr>
   </thead>
 </table>
@@ -187,6 +188,9 @@ table.on('tool(customertable)', function(obj) {
 	var data = obj.data;
 	//console.log(data);
 	switch (obj.event) {
+	case 'visitlog':
+		location.href="visitlog_page?Customer_id="+data.Customer_id;
+		break;
 	case 'private':
 		layer.confirm("确定要对"+data.Customer_name+"跟单吗？",{
 			btn:['确定','取消']
