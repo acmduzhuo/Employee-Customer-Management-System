@@ -43,4 +43,8 @@ public class ParamsUtil {
 		String loginUserID = "ef44d16f-4220-445d-97ba-5332dd8b85e8";
 		params.put("loginUserID", loginUserID);
 	}
+	public static void payment(Map params) {
+		String payment=params.get("visit_payment")+"";
+		params.put("visit_payment","on".equals(payment)?1:0);
+	}
 }

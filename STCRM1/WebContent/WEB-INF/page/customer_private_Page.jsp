@@ -23,8 +23,8 @@
 </script>
 <script type="text/html" id="rowtoolbar">
 	<a class="layui-btn layui-btn-xs layui-icon layui-icon-edit" lay-event="public">放弃跟单</a>
-    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="private">回访</a>
-    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="private">回访记录</a>
+    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="visit">回访</a>
+    <a class="layui-btn layui-btn-xs layui-icon layui-icon-edit layui-bg-blue" lay-event="visitlog">回访记录</a>
 </script>
 <table class="layui-table" lay-data="{url:'customer_private_list', page:true, id:'customertable_id',toolbar:'#toolbar'}" lay-filter="customertable">
   <thead>
@@ -85,38 +85,31 @@
 		</div>
 	</form>
 	
-	<form  hidden id="update_h_div" class="layui-form "  lay-filter="customerupdate">
-	    <input type='hidden' name="customer_id"/>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-			<label class="layui-form-label">客户名</label>
-			<div class="layui-input-inline">
-				<input name="customer_name" type="text" class="layui-input kong"  lay-verify="required">
-			</div>
-		</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">联系人</label>
+	<form  hidden id="visit_div" class="layui-form "  lay-filter="visitsave">
+		<div class="layui-form-item" id="phone">
+		<div class="layui-inline">
+			
+	      <label class="layui-form-label">是否付款</label>
+	      <div class="layui-input-block">
+	          <input type="checkbox" lay-text="是|否" name="visit_payment" lay-skin="switch" lay-filter="payment">
+	      </div>
+	    </div>
+	      <div class="layui-inline">
+				<label class="layui-form-label">付款金额</label>
 				<div class="layui-input-inline">
-					<input name="customer_liaison" type="text" class="layui-input kong" lay-verify="required">
+					<input name="visit_money" type="text" autocomplete="off" 
+					      class="layui-input kong" readonly lay-verify="required">
 				</div>
 			</div>
+	   
 		</div>
 
 		<div class="layui-form-item">
 			<div class="layui-inline">
-				<label class="layui-form-label">手机号</label>
+				<label class="layui-form-label">回访记录</label>
 				<div class="layui-input-inline">
-					<input name="customer_tel"  type="text" class="layui-input kong" lay-verify="required|phone">
-				</div>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">所在地</label>
-				<div class="layui-input-inline">
-					<input name="customer_addr"type="text"  class="city_input layui-input kong"  lay-verify="required"/>
+					<textarea name="visit_customer_info" placeholder="请输入内容" class="layui-textarea" 
+					     style="width:190%;"></textarea>
 				</div>
 			</div>
 		</div>
@@ -189,6 +182,9 @@ table.on('tool(customertable)', function(obj) {
 	var data = obj.data;
 	//console.log(data);
 	switch (obj.event) {
+	case 'visitlog':
+		location.href="visitlog_page?Customer_id="+data.Customer_id;
+		break;
 	case 'public':
 		layer.confirm("确定要放弃对"+data.Customer_name+"跟单吗？",{
 			btn:['确定','取消']
@@ -204,26 +200,32 @@ table.on('tool(customertable)', function(obj) {
 			});
 		});
 		break;
-	case 'update':
+	case 'visit':
 		//$("update_h_div [name=user_sex]").val(data.user_sex);
-		form.val("customerupdate",{
-			'customer_name':data.Customer_name,
-			'customer_liaison':data.Customer_liaison,
-			'customer_addr':data.Customer_addr,
-			'customer_tel':data.Customer_tel,
-			'customer_id':data.Customer_id
+		form.val("visitsave",{
+			'visit_customer_info':"",
+			'visit_money':"0",
+			'visit_payment':false
 		});
+		$("[name=visit_money]").attr("readonly","readonly");
 		//弹出对话框
 		layer.open({
 					type : 1,
-					title : '编辑公海客户信息',
-					content : $("#update_h_div"),
+					area: ['500px', '300px'],
+					title : '回访记录',
+					content : $("#visit_div"),
 					btn : [ '确定', '取消' ],
 					btn1 : function() {
-						$.post("customer_update",form.val("customerupdate"), function() {
-							layer.closeAll();
-							layer.msg(data.Customer_name+'客户信息修改成功！',{icon:6,time:2000});
-							table.reload('customertable_id');
+						var formdata=form.val("visitsave");
+						formdata.customer_id=data.Customer_id;
+						$.post("visit_save",formdata, 
+						function() {
+							layer.closeAll();//关闭所有对话框
+							layer.msg('回访信息保存成功！',
+								  {
+								      icon:1,//图标序号
+								      time:2000
+								  });
 						});
 					},
 					btn2 : function() {
@@ -235,6 +237,15 @@ table.on('tool(customertable)', function(obj) {
 		break;
 	}
 });
+form.on('switch(payment)',function(data){
+if(this.checked){
+	//付款金额可填
+	$("[name=visit_money]").removeAttr("readonly");
+}else{
+	//付款金额不可填
+	$("[name=visit_money]").attr("readonly","readonly").val("0");
+}
+    });
 </script>
 </body>
 </html>

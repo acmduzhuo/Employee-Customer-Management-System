@@ -33,7 +33,7 @@ public class CustomerAction {
 	@RequestMapping("customer_save")
 	@ResponseBody
 	public void customer_save(@RequestParam Map params) {
-		System.out.println(params);
+		//System.out.println(params);
 		cusSer.customer_save(params);
 	}
 	@RequestMapping("customer_del")
