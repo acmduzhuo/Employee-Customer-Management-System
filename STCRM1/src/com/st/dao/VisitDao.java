@@ -12,4 +12,6 @@ public interface VisitDao {
 	 * 回访日志
 	 */
 	List visitlog_list(Map params);
+	//报表
+	List total_sales();
 }

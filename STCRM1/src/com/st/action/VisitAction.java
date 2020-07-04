@@ -40,4 +40,18 @@ public class VisitAction {
 		//跳转界面
 		return "visitlog_Page";
 	}
+	/**
+	 * 报表
+	 */
+	@RequestMapping("datatable_page")
+	public String datatable_page() {
+		return "datatable_Page";
+	}
+	@RequestMapping("total_sales")
+	@ResponseBody
+	public Map total_sales() {
+		Map map = visitSer.total_sales();
+		System.out.println(map);
+		return map;
+	}
 }

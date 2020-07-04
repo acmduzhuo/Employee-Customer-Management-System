@@ -16,6 +16,13 @@
    on a.Visit_user_id=b.User_id
    where Visit_customer_id=#{Customer_id} 
    order by Visit_time desc
-   
    </select>
+   
+<!--    报表 -->
+     <select id="total_sales" resultType="map">
+     select a.User_realname,sum(b.Visit_money) as money
+     from crm_user as a left join crm_visitlog as b
+     on a.User_id=b.Visit_user_id
+     group by a.User_id
+     </select>
 </mapper>

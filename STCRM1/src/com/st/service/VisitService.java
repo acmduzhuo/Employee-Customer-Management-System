@@ -1,5 +1,7 @@
 package com.st.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +29,23 @@ public class VisitService {
 	 */
 	public List visitlog_list(Map params) {
 		return visitDao.visitlog_list(params);
+	}
+	/**
+	 * ±¨±í
+	 */
+	public Map total_sales() {
+		List list=visitDao.total_sales();
+		Map map=new HashMap();
+		List username_list=new ArrayList();
+		List money_list=new ArrayList();
+		Map temp=null;
+		for(int i=0;i<list.size();i++) {
+			temp=(Map)list.get(i);
+			username_list.add(temp.get("User_realname"));
+			money_list.add(temp.get("money"));
+		}
+		map.put("name", username_list);
+		map.put("money", money_list);
+		return map;
 	}
 }
